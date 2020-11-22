@@ -1,0 +1,24 @@
+{
+  "name": "mineflayer-troll",
+  "version": "1.0.0",
+  "description": "",
+  "main": "troll.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mineflayer-cmd": "^1.0.2",
+    "mineflayer-pathfinder": "^1.0.12",
+    "mineflayer-pvp": "^1.0.2",
+    "websocket": "^1.0.32",
+    "winston": "^3.3.3",
+    "yargs": "^16.1.1"
+  },
+  "optionalDependencies": {
+    "@tensorflow-models/toxicity": "^1.2.2",
+    "@tensorflow/tfjs": "^2.7.0",
+    "@tensorflow/tfjs-node": "^2.7.0"
+  }
+}
