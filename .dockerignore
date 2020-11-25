@@ -8,4 +8,6 @@
 **/.editorconfig
 **/.aws
 **/dist
-helm
+**/helm
+**/.github
+**/Makefile

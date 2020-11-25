@@ -1,27 +1,23 @@
 FROM node:14-slim
-
-### Cancer dependencies ###
-# ENV TZ=Europe/Paris
-# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-### Cancer dependencies ###
-
+# alpine not compatible with TFJS https://github.com/tensorflow/tfjs/issues/1425
 WORKDIR /app
-COPY package.json ./
-# RUN apt-get update && \
-#     apt-get install -y build-essential libcairo2 libcairo2-dev libpango1.0 \
-#     libpango1.0-dev libjpeg-dev libgif7 libgif-dev librsvg2-2 librsvg2-dev && \
-#     npm install
+COPY package*.json ./
+
+# npm rebuild @tensorflow/tfjs-node --build-from-source seems required
 RUN apt-get update && \
-    apt-get install -y software-properties-common build-essential pkg-config python3 && \
-    npm install --production=true && \
+    apt-get install -y build-essential wget python3 make gcc libc6-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    npm install --production && \
+    if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
+    echo '{"tf-lib": "https://s3.us.cloud-object-storage.appdomain.cloud/tfjs-cos/libtensorflow-cpu-linux-arm-2.7.0.tar.gz"}' \
+    > node_modules/@tensorflow/tfjs-node/scripts/custom-binary.json; fi && \
     npm rebuild @tensorflow/tfjs-node --build-from-source
+    
+# For the if see https://github.com/yhwang/node-red-contrib-tf-model#note (should make TFJS works on Raspberry PI)
 
-# See https://github.com/yhwang/node-red-contrib-tf-model#note (make TFJS works on Raspberry PI)
-RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
-    echo '{"tf-lib": "https://s3.us.cloud-object-storage.appdomain.cloud/tfjs-cos/libtensorflow-cpu-linux-arm-1.15.0.tar.gz"}' \
-    > node_modules/@tensorflow/tfjs-node/scripts/custom-binary.json; fi
+COPY default.json .
+COPY plugins ./plugins
+COPY start.js .
 
-COPY . .
-
-ENTRYPOINT [ "node", "troll.js" ]
+ENTRYPOINT [ "node", "start.js" ]
 CMD [ "-c", "default.json" ]

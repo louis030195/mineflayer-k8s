@@ -3,7 +3,7 @@ on:
   release:
     types: [published]
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   push_to_registry:
@@ -31,10 +31,10 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
+          platforms: linux/arm,linux/arm64,linux/amd64
           push: true
           tags: |
-            louis030195/mineflayer-troll:latest
-            louis030195/mineflayer-troll:0.0.8
-            ghcr.io/louis030195/mineflayer-troll/mineflayer-troll:latest
-            ghcr.io/louis030195/mineflayer-troll/mineflayer-troll:0.0.8
+            louis030195/mineflayer-k8s:latest
+            louis030195/mineflayer-k8s:0.1.0
+            ghcr.io/louis030195/mineflayer-k8s/mineflayer-k8s:latest
+            ghcr.io/louis030195/mineflayer-k8s/mineflayer-k8s:0.1.0

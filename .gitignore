@@ -1,8 +1,9 @@
 # Dependency directories
 node_modules/
+package-lock.json
 
 # Custom config
-custom
+setting*.json
 
 # Custom Helm values
 values-dev.yaml

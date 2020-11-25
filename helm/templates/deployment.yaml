@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mineflayer-troll.fullname" . }}
+  name: {{ include "mineflayer-k8s.fullname" . }}
   labels:
-    {{- include "mineflayer-troll.labels" . | nindent 4 }}
+    {{- include "mineflayer-k8s.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "mineflayer-troll.selectorLabels" . | nindent 6 }}
+      {{- include "mineflayer-k8s.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -15,13 +15,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "mineflayer-troll.selectorLabels" . | nindent 8 }}
+        {{- include "mineflayer-k8s.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "mineflayer-troll.serviceAccountName" . }}
+      serviceAccountName: {{ include "mineflayer-k8s.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
