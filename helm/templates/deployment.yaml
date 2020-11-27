@@ -33,10 +33,12 @@ spec:
           # args: [ "while true; do sleep 30; done;" ]
           args: ["-c", "custom.json"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{- if ne (include "isViewerEnabled" .) "false" }}
           ports:
-            - name: http
-              containerPort: {{ .Values.config.viewer.port }}
+            - name: viewer
+              containerPort: 3000
               protocol: TCP
+{{- end }}
           volumeMounts:
           - name: config-volume
             mountPath: /app/custom.json

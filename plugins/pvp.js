@@ -1,7 +1,7 @@
-const { goals } = require('mineflayer-pathfinder')
-
 module.exports = function (bot, options) {
   let guardPos = null
+  const { goals } = require('mineflayer-pathfinder')
+  bot.loadPlugin(require('mineflayer-pvp').plugin)
 
   // Assign the given location to be guarded
   bot.guardArea = (pos) => {

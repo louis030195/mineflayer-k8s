@@ -10,14 +10,16 @@ const argv = require('yargs/yargs')(process.argv.slice(2))
   .argv
 
 const mineflayer = require('mineflayer')
-const { pathfinder, Movements } = require('mineflayer-pathfinder')
 const defaultSettings = require('./default')
 
 let settings
 const winston = require('winston')
 const logger = winston.createLogger()
 logger.add(new winston.transports.Console({
-  format: winston.format.simple()
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  )
 }))
 try {
   logger.info(`Trying to load config ${argv.config} ...`)
@@ -33,9 +35,10 @@ try {
   logger.info(`Couldn't find custom settings, going for default ${err}`)
   settings = defaultSettings
 }
-
+const path = require('path')
+const fs = require('fs')
 function login () {
-  const bot = settings.password !== 'offline'
+  const bot = settings.password !== undefined && settings.password !== 'offline'
     ? mineflayer.createBot({
         host: settings.host,
         port: parseInt(settings.port),
@@ -60,22 +63,29 @@ function login () {
   bot.on('error', err => {
     bot.log(`Error: ${err}`, undefined, true)
   })
+  const absPathPlugins = path.join(__dirname, 'plugins')
+  fs.readdirSync(absPathPlugins).forEach(file => {
+    file = file.slice(0, -3)
+    if (settings.disabledPlugins.includes(file)) {
+      logger.info(`Plugin ${file} is disabled`)
+      return
+    }
+    const p = require(`${absPathPlugins}/${file}`)
+    try {
+      bot.loadPlugin(p)
+    } catch (err) {
+      logger.info(`Couldn't load plugin ${file}: ${err}`)
+      return
+    }
+    logger.info(`Plugin ${file} is enabled`)
+  })
   bot.loadPlugin(require('mineflayer-cmd').plugin)
-  bot.loadPlugin(require('./plugins/utils'))
-  bot.loadPlugin(require('./plugins/pvp'))
-  bot.loadPlugin(require('./plugins/chat'))
-  try {
-    bot.loadPlugin(require('./plugins/chatToxicity'))
-  } catch (err) {
-    bot.log(`Architecture doesn't support TensorflowJS, err: ${err}`, undefined, true)
-  }
-  bot.loadPlugin(require('./plugins/move'))
-  bot.loadPlugin(pathfinder)
-  bot.loadPlugin(require('mineflayer-pvp').plugin)
+  bot.loadPlugin(require('mineflayer-pathfinder').pathfinder)
 
   bot.on('spawn', () => {
     bot.log(`I just spawned in ${bot.prettyVec3(bot.entity.position)}`)
     const mcData = require('minecraft-data')(bot.version)
+    const Movements = require('mineflayer-pathfinder').Movements
     const defaultMove = new Movements(bot, mcData)
     bot.pathfinder.setMovements(defaultMove)
     bot.pathfinder.setGoal(null)
@@ -90,7 +100,6 @@ function login () {
   })
   return bot
 }
-
 const bot = login()
 process.on('SIGTERM', () => {
   bot.log('My master unplugged me, bye !')

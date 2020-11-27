@@ -1,7 +1,6 @@
 # mineflayer-k8s
 
-[![Build Status](https://github.com/louis030195/mineflayer-k8s/workflows/CI/badge.svg)](https://github.com/louis030195/mineflayer-k8s/actions?query=workflow%3A%22CI%22)
-[![Docker Status](https://github.com/louis030195/mineflayer-k8s/workflows/CI/badge.svg)](https://github.com/louis030195/mineflayer-k8s/actions?query=workflow%3A%22Docker%22)
+![Docker](https://github.com/louis030195/mineflayer-k8s/workflows/Docker/badge.svg)
 [![Discord](https://img.shields.io/badge/chat-on%20discord-brightgreen.svg)](https://discord.gg/GsEFRM8)
 [![Try it on gitpod](https://img.shields.io/badge/try-on%20gitpod-brightgreen.svg)](https://gitpod.io/#https://github.com/louis030195/mineflayer-k8s)
 
@@ -15,9 +14,20 @@ A Mineflayer example bot runnable as a [baremetal process](https://nodejs.org/en
 
 If you're lucky mineflayer-k8s(s) are running on **109.210.246.114:30018** Minecraft server running in a Kubernetes cluster running on a Raspberry PI (deep learning plugins are off, couldn't make TFJS work yet on ARM).
 
+## Viewer
+
+You can interactively see what your bot is doing using [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) in the web.  
+You can disable this feature easily by adding viewer to the disabled plugins in the configuration:
+
+```json
+"disabledPlugins": ["viewer"]
+```
+
+![viewer](docs/images/viewer.png)
+
 ## Node dependencies
 
-- [mineflayer](https://github.com/PrismarineJS/mineflayer), [mineflayer-cmd](https://github.com/PrismarineJS/mineflayer-cmd), [mineflayer-pathfinder](https://github.com/PrismarineJS/mineflayer-pathfinder), [mineflayer-pvp](https://github.com/PrismarineJS/mineflayer-pvp) (Minecraft bots)
+- [mineflayer](https://github.com/PrismarineJS/mineflayer), [mineflayer-cmd](https://github.com/PrismarineJS/mineflayer-cmd), [mineflayer-pathfinder](https://github.com/PrismarineJS/mineflayer-pathfinder), [mineflayer-pvp](https://github.com/PrismarineJS/mineflayer-pvp), [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) (Minecraft bots)
 - [@tensorflow/tfjs-node](https://github.com/tensorflow/tfjs), @tensorflow/tfjs, [@tensorflow-models/toxicity](https://github.com/tensorflow/tfjs-models) (deep learning)
 - [winston](https://github.com/winstonjs/winston) (logging)
 - [yargs](https://github.com/yargs/yargs) (arguments)
@@ -54,7 +64,7 @@ deploy_k8s_server      Deploy a github.comitzg/minecraft-server-charts on Kubern
 Using [default settings](./default.json)
 
 ```bash
-make online
+make deploy
 ```
 
 ### With custom settings
@@ -107,6 +117,19 @@ make deploy_k8s
 ```bash
 RELEASE=mt1 CONFIG=./setting.json make deploy_k8s
 ```
+
+#### Example Helm output
+
+```bash
+helm install mk helm -f helm/values-dev.yaml --dry-run --debug
+```
+
+>NOTES:
+>mk connecting as foo to 109.210.246.114:30018, server running >version 1.16.4
+>1. Get logs
+>  kubectl logs -f -l app.kubernetes.io/instance=mk
+>2. Watch your bot playing in the web using prismarine-viewer at 109.210.246.114:30019
+
 
 ## Deploy a externally accessible Minecraft server on your k8s cluster
 

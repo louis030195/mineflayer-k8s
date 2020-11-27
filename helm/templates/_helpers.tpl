@@ -61,3 +61,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Check if viewer is enabled
+*/}}
+{{- define "isViewerEnabled" -}}
+{{- range .Values.config.disabledPlugins | uniq -}}
+  {{- if eq . "viewer" -}}
+    false
+  {{- end }}
+{{- end }}
+{{- end }}

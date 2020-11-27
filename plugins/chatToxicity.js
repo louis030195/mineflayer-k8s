@@ -1,9 +1,8 @@
-// Tensorflow
-require('@tensorflow/tfjs')
-require('@tensorflow/tfjs-node')
-const toxicity = require('@tensorflow-models/toxicity')
-
 module.exports = function (bot, options) {
+  require('@tensorflow/tfjs')
+  require('@tensorflow/tfjs-node')
+  const toxicity = require('@tensorflow-models/toxicity')
+
   bot.detectToxicity = async (username, sentence) => {
     const threshold = 0.9
     const model = await toxicity.load(threshold)

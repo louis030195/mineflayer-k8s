@@ -1,4 +1,4 @@
-TAG ?= 0.1.0
+TAG ?= 0.1.1
 CONFIG ?= default.json
 SERVER_CONFIG ?= server-values.yaml
 RELEASE ?= mineflayer-k8s

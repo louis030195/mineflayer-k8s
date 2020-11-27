@@ -1,6 +1,6 @@
-const { goals } = require('mineflayer-pathfinder')
-
 module.exports = function (bot, options) {
+  const { goals } = require('mineflayer-pathfinder')
+
   function goHereCommand (sender, flags, args, cb) {
     const p = bot.players[sender]
 

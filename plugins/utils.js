@@ -1,6 +1,6 @@
-const { Movements } = require('mineflayer-pathfinder')
-
 module.exports = function (bot, options) {
+  const { Movements } = require('mineflayer-pathfinder')
+
   bot.on('death', () => {
     bot.log('Unfortunately, I died !')
     // TODO // https://github.com/PrismarineJS/mineflayer-pathfinder/issues/53
@@ -23,7 +23,7 @@ module.exports = function (bot, options) {
   }
   bot.prettyVec3 = p => `x:${p.x.toFixed(1)};y:${p.y.toFixed(1)};z:${p.z.toFixed(1)}`
   bot.assistMessage = (username) =>
-        `Hello my dear ${username !== undefined ? username : ''} I'm your personnal assistant, say "come" and I'll come at you
+    `Hello my dear ${username !== undefined ? username : ''} I'm your personnal assistant, say "come" and I'll come at you
     say "guard" and I'll defend around your position, say "stop" and I'll stop guarding this position.`
 
   // announcePlayers = {}
@@ -38,7 +38,7 @@ module.exports = function (bot, options) {
 
   //   const prettyFlag = flags => flags.length > 0 ? `flags=${c.flags.map(f => f.name + 'argCount ' + f.argCount)}` : ''
   //   const prettyHelp = help => help ? `help=${help}` : ''
-  function helpCommand (sender, flags, args, cb) {
+  function helpCommand(sender, flags, args, cb) {
     bot.whisper(sender, 'I propose you these services, remember to add "!" before a command')
     // const prettyCommands = bot.cmd.commands.map(c => `\t"command=${c.name}" ${prettyFlag(c.flags)} ${prettyHelp(c.help)}`).join('\n')
     const prettyCommands = bot.cmd.commands.map(c => `${c.name}`).join(',')
@@ -52,17 +52,17 @@ module.exports = function (bot, options) {
   //     cb()
   // }
 
-  function informationPositionCommand (sender, flags, args, cb) {
+  function informationPositionCommand(sender, flags, args, cb) {
     bot.log(`My position is ${bot.prettyVec3(bot.entity.position)}`)
     cb()
   }
 
-  function informationHealthCommand (sender, flags, args, cb) {
+  function informationHealthCommand(sender, flags, args, cb) {
     bot.log(`I have ${bot.health} health`)
     cb()
   }
 
-  function informationFoodCommand (sender, flags, args, cb) {
+  function informationFoodCommand(sender, flags, args, cb) {
     bot.log(`I have ${bot.food} food`)
     cb()
   }
