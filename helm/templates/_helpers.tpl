@@ -52,17 +52,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
-*/}}
-{{- define "mineflayer-k8s.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "mineflayer-k8s.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
 Check if viewer is enabled
 */}}
 {{- define "isViewerEnabled" -}}

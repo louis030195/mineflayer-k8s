@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:14-slim as BUILDER
 # alpine not compatible with TFJS https://github.com/tensorflow/tfjs/issues/1425
 WORKDIR /app
 COPY package.json ./
@@ -11,11 +11,18 @@ RUN apt-get update && \
     npm rebuild canvas @tensorflow/tfjs-node --build-from-source && \
     if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then \
     echo '{"tf-lib": "https://s3.us.cloud-object-storage.appdomain.cloud/tfjs-cos/libtensorflow-cpu-linux-arm-1.15.0.tar.gz"}' \
-    > node_modules/@tensorflow/tfjs-node/scripts/custom-binary.json; fi && \
-    rm -rf /var/lib/apt/lists/*
+    > node_modules/@tensorflow/tfjs-node/scripts/custom-binary.json; fi
 
 # For the if see https://github.com/yhwang/node-red-contrib-tf-model#note (make TFJS works on Raspberry PI / ARM)
 
+FROM node:14-slim
+
+WORKDIR /app
+
+# Runtime requirements (canvas) TODO: copy paste the lib.so (pixman thing)
+RUN apt-get update && apt-get install -y libjpeg-dev libgif-dev librsvg2-dev && rm -rf /var/lib/apt/lists/*
+
+COPY --from=BUILDER /app/node_modules ./node_modules
 COPY default.json .
 COPY plugins ./plugins
 COPY start.js .

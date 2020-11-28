@@ -1,5 +1,5 @@
 {{ .Release.Name }} connecting as {{ .Values.config.username }} to {{ .Values.config.host }}:{{ .Values.config.port }}, server running version {{ .Values.config.version }}
-1. `kubectl describe deployment.apps/{{ .Release.Name }}-mineflayer-k8s`
+1. kubectl describe deployment.apps/{{ .Release.Name }}-mineflayer-k8s
 2. Get logs
   kubectl logs -f -l app.kubernetes.io/instance={{.Release.Name}}
 {{- if ne (include "isViewerEnabled" .) "false" }}

@@ -43,7 +43,7 @@ louis@louis-pc:~/Documents/mineflayer-k8s$ make help
 usage: make [target] ...
 
 Variables:
-TAG: Docker tag, default "TAG ?= 0.1.3"
+TAG: Docker tag, default "TAG ?= 0.1.4"
 CONFIG: path to application config file, default "CONFIG ?= setting.json"
 SERVER_CONFIG: path to minecraft server config file, default "SERVER_CONFIG ?= server-values.yaml"
 
