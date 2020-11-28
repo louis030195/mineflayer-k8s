@@ -1,6 +1,8 @@
 # mineflayer-k8s
 
 ![Docker](https://github.com/louis030195/mineflayer-k8s/workflows/Docker/badge.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/louis030195/mineflayer-k8s)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/louis030195/mineflayer-k8s/latest)
 [![Discord](https://img.shields.io/badge/chat-on%20discord-brightgreen.svg)](https://discord.gg/GsEFRM8)
 [![Try it on gitpod](https://img.shields.io/badge/try-on%20gitpod-brightgreen.svg)](https://gitpod.io/#https://github.com/louis030195/mineflayer-k8s)
 
@@ -12,18 +14,18 @@ A Mineflayer example bot runnable as a [baremetal process](https://nodejs.org/en
 
 ![multi mineflayer-k8s](docs/images/multi.gif)
 
-If you're lucky mineflayer-k8s(s) are running on **109.210.246.114:30018** Minecraft server running in a Kubernetes cluster running on a Raspberry PI (deep learning plugins are off, couldn't make TFJS work yet on ARM).
+If you're lucky mineflayer-k8s(s) are running on **109.210.246.114:30018** Minecraft server running in a Kubernetes cluster running on a Raspberry PI.
 
 ## Viewer
 
 You can interactively see what your bot is doing using [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) in the web.  
-You can disable this feature easily by adding viewer to the disabled plugins in the configuration:
+You can disable this feature easily by adding viewer to the disabled plugins (or any plugins in the plugins directory) in the configuration:
 
 ```json
 "disabledPlugins": ["viewer"]
 ```
 
-![viewer](docs/images/viewer.png)
+![viewer](docs/images/viewer.gif)
 
 ## Node dependencies
 
@@ -33,6 +35,8 @@ You can disable this feature easily by adding viewer to the disabled plugins in 
 - [yargs](https://github.com/yargs/yargs) (arguments)
 
 ## Usage
+
+If you want to use Kubernetes and know it plus Helm, just jump directly to the [values](helm/values.yaml).
 
 ```make
 louis@louis-pc:~/Documents/mineflayer-k8s$ make help

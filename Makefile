@@ -1,4 +1,4 @@
-TAG ?= 0.1.2
+TAG ?= 0.1.3
 CONFIG ?= default.json
 SERVER_CONFIG ?= server-values.yaml
 RELEASE ?= mineflayer-k8s
@@ -29,7 +29,8 @@ deploy_k8s: ## Deploy as a Kubernetes Deployment
 	config.port=$(shell jq -r '.port' ${CONFIG}),\
 	config.username=$(shell jq -r '.username' ${CONFIG}),\
 	config.password=$(shell jq -r '.password' ${CONFIG}),\
-	config.version=$(shell jq -r '.version' ${CONFIG})
+	config.version=$(shell jq -r '.version' ${CONFIG}),\
+	config.disabledPlugins=$(shell jq -r '.disabledPlugins' ${CONFIG})
 
 deploy_k8s_server: ## Deploy a github.comitzg/minecraft-server-charts on Kubernetes
 	# https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft/values.yaml#L40

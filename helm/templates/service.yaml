@@ -6,18 +6,17 @@ metadata:
   labels:
     {{- include "mineflayer-k8s.labels" . | nindent 4 }}
 spec:
-  type: LoadBalancer
-  loadBalancerIP: {{ .Values.config.viewer.loadBalancerIP }}
+  type: NodePort
   ports:
     - port: 3000
       targetPort: viewer
-      nodePort: {{ .Values.config.viewer.nodePort }}
+      nodePort: {{ .Values.viewer.nodePort }}
       protocol: TCP
       name: viewer
   selector:
     {{- include "mineflayer-k8s.selectorLabels" . | nindent 4 }}
   externalIPs:
-    {{- with .Values.config.viewer.externalIPs }}
+    {{- with .Values.viewer.externalIPs }}
       {{- range . }}
         - {{ . | quote }}
       {{- end }}

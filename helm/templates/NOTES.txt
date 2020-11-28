@@ -1,29 +1,7 @@
 {{ .Release.Name }} connecting as {{ .Values.config.username }} to {{ .Values.config.host }}:{{ .Values.config.port }}, server running version {{ .Values.config.version }}
-1. Get logs
+1. `kubectl describe deployment.apps/{{ .Release.Name }}-mineflayer-k8s`
+2. Get logs
   kubectl logs -f -l app.kubernetes.io/instance={{.Release.Name}}
 {{- if ne (include "isViewerEnabled" .) "false" }}
-2. Watch your bot playing in the web using prismarine-viewer at {{ .Values.config.viewer.loadBalancerIP }}:{{ .Values.config.viewer.nodePort }}
+3. Watch your bot playing in the web using prismarine-viewer at {{ .Values.viewer.externalIPs }}:{{ .Values.viewer.nodePort }}
 {{- end }}
-{{- /*
-2. Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- end }}
-{{- end }}
-{{- else if contains "NodePort" .Values.config.viewer.type }}
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "mineflayer-k8s.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.config.viewer.type }}
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "mineflayer-k8s.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "mineflayer-k8s.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.config.viewer.port }}
-{{- else if contains "ClusterIP" .Values.config.viewer.type }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "mineflayer-k8s.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:80
-{{- end }}
-*/}}

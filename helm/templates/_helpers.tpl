@@ -66,9 +66,11 @@ Create the name of the service account to use
 Check if viewer is enabled
 */}}
 {{- define "isViewerEnabled" -}}
-{{- range .Values.config.disabledPlugins | uniq -}}
+{{- with .Values.config.disabledPlugins }}
+{{- range . | uniq -}}
   {{- if eq . "viewer" -}}
     false
   {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
