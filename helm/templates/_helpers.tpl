@@ -37,8 +37,8 @@ Common labels
 {{- define "mineflayer-k8s.labels" -}}
 helm.sh/chart: {{ include "mineflayer-k8s.chart" . }}
 {{ include "mineflayer-k8s.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- if .Values.image.tag }}
+app.kubernetes.io/version: {{ .Values.image.tag | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}

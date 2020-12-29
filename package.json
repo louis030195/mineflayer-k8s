@@ -17,7 +17,7 @@
   },
   "optionalDependencies": {
     "mineflayer-pvp": "^1.0.2",
-    "prismarine-viewer": "^1.6.0",
+    "prismarine-viewer": "^1.12.0",
     "canvas": "^2.6.1",
     "@tensorflow-models/toxicity": "^1.2.2",
     "@tensorflow/tfjs": "^2.7.0",

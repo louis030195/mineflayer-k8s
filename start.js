@@ -72,12 +72,12 @@ function login () {
     }
     const p = require(`${absPathPlugins}/${file}`)
     try {
-      bot.loadPlugin(p)
+      bot.loadPlugin(p /*, settings.pluginOptions[file] */)
     } catch (err) {
       logger.info(`Couldn't load plugin ${file}: ${err}`)
       return
     }
-    logger.info(`Plugin ${file} is enabled`)
+    logger.info(`Plugin ${file} is enabled`) // with options ${JSON.stringify(settings.pluginOptions[file])}
   })
   bot.loadPlugin(require('mineflayer-cmd').plugin)
   bot.loadPlugin(require('mineflayer-pathfinder').pathfinder)

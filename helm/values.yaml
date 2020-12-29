@@ -8,7 +8,7 @@ image:
   repository: louis030195/mineflayer-k8s
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is latest.
-  tag: "0.1.4"
+  tag: "0.1.5"
 
 imagePullSecrets: []
 nameOverride: ""

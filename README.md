@@ -14,11 +14,18 @@ A Mineflayer example bot runnable as a [baremetal process](https://nodejs.org/en
 
 ![multi mineflayer-k8s](docs/images/multi.gif)
 
-If you're lucky mineflayer-k8s(s) are running on **109.210.246.114:30018** Minecraft server running in a Kubernetes cluster running on a Raspberry PI.
+---
+
+Detect toxic players using [TensorflowJS](https://github.com/tensorflow/tfjs)
+
+![toxic](docs/images/toxic.gif)
+
+If you're lucky mineflayer-k8s(s) are running on **91.121.67.56:30018** Minecraft server running in a Kubernetes cluster running on a Raspberry PI.
 
 ## Viewer
 
 You can interactively see what your bot is doing using [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer) in the web.  
+See example [here](91.121.67.56:30019)
 You can disable this feature easily by adding viewer to the disabled plugins (or any plugins in the plugins directory) in the configuration:
 
 ```json

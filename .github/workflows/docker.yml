@@ -33,6 +33,6 @@ jobs:
           push: true
           tags: |
             louis030195/mineflayer-k8s:latest
-            louis030195/mineflayer-k8s:0.1.4
+            louis030195/mineflayer-k8s:0.1.5
             ghcr.io/louis030195/mineflayer-k8s/mineflayer-k8s:latest
-            ghcr.io/louis030195/mineflayer-k8s/mineflayer-k8s:0.1.4
+            ghcr.io/louis030195/mineflayer-k8s/mineflayer-k8s:0.1.5

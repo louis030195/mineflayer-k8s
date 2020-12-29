@@ -1,4 +1,4 @@
-TAG ?= 0.1.4
+TAG ?= 0.1.5
 CONFIG ?= default.json
 SERVER_CONFIG ?= server-values.yaml
 RELEASE ?= mineflayer-k8s
@@ -14,10 +14,10 @@ help: ## Display this help
 	@echo -e '\033[35mTargets:\033[0m'
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
 
-build_push: ## Build and push on DockerHub multiarch Docker image (need Docker buildx)
+build_push: ## Build and push on DockerHub multi-arch Docker image (need Docker buildx)
 	docker buildx build --platform linux/arm,linux/arm64,linux/amd64 -t louis030195/mineflayer-k8s:${TAG} . --push
 
-deploy: ## Deploy as a baremetal process
+deploy: ## Deploy as a bare-metal process
 	node start.js -c ${CONFIG}
 
 deploy_docker: ## Deploy as a Docker container

@@ -1,6 +1,10 @@
 module.exports = function (bot, options) {
   require('@tensorflow/tfjs')
-  require('@tensorflow/tfjs-node')
+  try {
+    require('@tensorflow/tfjs-node')
+  } catch (e) {
+    console.log('Not using NodeJS version of Tensorflow, not supported')
+  }
   const toxicity = require('@tensorflow-models/toxicity')
 
   bot.detectToxicity = async (username, sentence) => {
